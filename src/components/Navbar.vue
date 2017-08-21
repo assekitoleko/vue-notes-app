@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar-fixed">
+    <div class="navbar-fixed" v-if="$route.path.includes('editor') == false">
         <nav>
             <div class="nav-wrapper black">
                 <a class="brand-logo left">{{ $route.name }}</a>

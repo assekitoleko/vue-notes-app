@@ -62,7 +62,8 @@ export default {
     methods: {
         // normal note methods
         NOTE_edit(noteData) {
-            this.$store.commit('NOTE_edit', noteData.id)
+            // this.$store.commit('NOTE_edit', noteData.id)
+            this.$router.push({name: 'Editor', params: { noteIn: 'notes', noteID: noteData.id}})
         },
         NOTE_archive(noteData) {
             this.$store.commit('NOTE_archive', noteData.id)
@@ -73,7 +74,8 @@ export default {
 
         // archived note methods
         ARCHIVE_edit(noteData) {
-            this.$store.commit('ARCHIVE_edit', noteData.id)
+            // this.$store.commit('ARCHIVE_edit', noteData.id)
+            this.$router.push({name: 'Editor', params: { noteIn: 'archive', noteID: noteData.id}})
         },
 
         ARCHIVE_remove(noteData) {
@@ -83,6 +85,7 @@ export default {
         // trashed note methods
         TRASH_edit(noteData) {
             this.$store.commit('TRASH_edit', noteData.id)
+            this.$router.push({name: 'Editor', params: { noteIn: 'bin', noteID: noteData.id}})
         },
 
         TRASH_remove(noteData) {

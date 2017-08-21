@@ -49,15 +49,24 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    add(state) {
+    NOTE_add(state) {
       var newID = state.data.notes.length;
-      state.data.notes.push({ id: newID });
+      state.data.notes.push({ id: newID, title: "", content: "", color: colors.white });
+      router.push({name: 'Editor', params: { noteIn: 'notes', noteID: newID}})
     },
 
     // normal note mutations
     NOTE_edit(state, id) {
-      var index = state.data.notes.findIndex(i => i.id === id);
-      state.data.notes[index].title = "edited..";
+      
+      // var index = state.data.notes.findIndex(i => i.id === id);
+      // state.data.notes[index].title = "edited..in notes";
+    },
+
+    // TODO temporary solution as notes will not be sorted
+    // if they are sorted, we will have to go trhough notes
+    // and see if any notes are empty and remove them
+    NOTE_pop(state, id){
+      state.data.notes.pop()
     },
 
     NOTE_archive(state, id) {
@@ -84,7 +93,7 @@ const store = new Vuex.Store({
     // archived note mutations
     ARCHIVE_edit(state, id) {
       var index = state.data.archive.findIndex(i => i.id === id);
-      state.data.archive[index].title = "edited..";
+      state.data.archive[index].title = "edited..in archive";
     },
 
     ARCHIVE_remove(state, id) {
@@ -101,7 +110,7 @@ const store = new Vuex.Store({
     // trashed note mutations
     TRASH_edit(state, id) {
       var index = state.data.bin.findIndex(i => i.id === id);
-      state.data.bin[index].title = "edited..";
+      state.data.bin[index].title = "edited..in trash";
     },
 
     TRASH_remove(state, id) {

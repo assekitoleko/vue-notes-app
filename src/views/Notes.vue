@@ -19,6 +19,12 @@ export default {
         return {
             
         }
+    },
+    mounted() {
+        var notes = this.$store.state.data.notes
+        if(notes[notes.length-1]['title'] === '' && notes[notes.length-1]['content'] === '' ) {
+            this.$store.commit('NOTE_pop')
+        }
     }
 }    
 </script>

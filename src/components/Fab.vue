@@ -16,7 +16,7 @@ export default {
     },
     methods: {
         add() {
-            this.$store.commit('add')
+            this.$store.commit('NOTE_add')
         }
     }
 }  

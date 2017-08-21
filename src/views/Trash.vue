@@ -1,6 +1,6 @@
 <template>
     <div>
-        <card cardType="trash" :currentNote="note" :key="note.id" :color="note.color" v-for="note in this.$store.state.bin" :content="note.content" :title="note.title"></card>
+        <card cardType="trash" :currentNote="note" :key="note.id" :color="note.color" v-for="note in this.$store.state.data.bin" :content="note.content" :title="note.title"></card>
     </div>
 </template>
 

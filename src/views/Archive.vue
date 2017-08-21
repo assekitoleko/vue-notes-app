@@ -1,6 +1,6 @@
 <template>
     <div>
-        <card cardType="archive" :currentNote="note" :key="note.id" :color="note.color" v-for="note in this.$store.state.archive" :content="note.content" :title="note.title"></card>
+        <card cardType="archive" :currentNote="note" :key="note.id" :color="note.color" v-for="note in this.$store.state.data.archive" :content="note.content" :title="note.title"></card>
     </div>
 </template>
 
