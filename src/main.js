@@ -1,10 +1,129 @@
-// The following line loads the standalone build of Vue instead of the runtime-only build,
-// so you don't have to do: import Vue from 'vue/dist/vue'
-// This is done with the browser options. For the config, see package.json
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Vuex from "vuex";
+import App from "./App.vue";
+import VuexPersist from "vuex-persist";
+import { colors } from "./colors.js";
 
-new Vue({ // eslint-disable-line no-new
-  el: '#app',
-  render: (h) => h(App)
-})
+import Routes from "./routes.js";
+
+Vue.use(Vuex);
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+  routes: Routes
+});
+
+const vuexLocalStorage = new VuexPersist({
+  key: "vuex",
+  storage: window.localStorage
+});
+
+const store = new Vuex.Store({
+  plugins: [vuexLocalStorage.plugin],
+  state: {
+    data: {
+      bin: [],
+      archive: [],
+      notes: [
+        {
+          id: 0,
+          title: "card 0 title",
+          content: "card 0 content",
+          color: colors.grey
+        },
+        {
+          id: 1,
+          title: "card 1 title",
+          content: "card 1 content",
+          color: colors.yellow
+        },
+
+        {
+          id: 2,
+          title: "card 2 title",
+          content: "card 2 content",
+          color: colors.green
+        }
+      ]
+    }
+  },
+  mutations: {
+    add(state) {
+      var newID = state.data.notes.length;
+      state.data.notes.push({ id: newID });
+    },
+
+    // normal note mutations
+    NOTE_edit(state, id) {
+      var index = state.data.notes.findIndex(i => i.id === id);
+      state.data.notes[index].title = "edited..";
+    },
+
+    NOTE_archive(state, id) {
+      var obj = state.data.notes.find(i => i.id === id);
+      state.data.archive.push(obj);
+      Materialize.toast("Note archived.", 1000);
+
+      // TODO same as remove
+      var index = state.data.notes.findIndex(i => i.id === id);
+      state.data.notes.splice(index, 1);
+    },
+
+    NOTE_remove(state, id) {
+      // TODO same as archive but pushed to bin
+      var obj = state.data.notes.find(i => i.id === id);
+      state.data.bin.push(obj);
+
+      var index = state.data.notes.findIndex(i => i.id === id);
+      state.data.notes.splice(index, 1);
+
+      Materialize.toast("Note moved to bin.", 1000);
+    },
+
+    // archived note mutations
+    ARCHIVE_edit(state, id) {
+      var index = state.data.archive.findIndex(i => i.id === id);
+      state.data.archive[index].title = "edited..";
+    },
+
+    ARCHIVE_remove(state, id) {
+      // TODO same as archive but pushed to bin
+      var obj = state.data.archive.find(i => i.id === id);
+      state.data.bin.push(obj);
+
+      var index = state.data.archive.findIndex(i => i.id === id);
+      state.data.archive.splice(index, 1);
+
+      Materialize.toast("Note moved to bin.", 1000);
+    },
+
+    // trashed note mutations
+    TRASH_edit(state, id) {
+      var index = state.data.bin.findIndex(i => i.id === id);
+      state.data.bin[index].title = "edited..";
+    },
+
+    TRASH_remove(state, id) {
+      // TODO dupes
+      var index = state.data.bin.findIndex(i => i.id === id);
+      state.data.bin.splice(index, 1);
+
+      Materialize.toast("Note deleted.", 1000);
+    },
+
+    // TODO
+    STATE_import(state, newState) {
+      state.data = JSON.parse(newState).data
+      Materialize.toast("Notes restored from settings file.", 1500);
+    }
+  }
+});
+
+new Vue({
+  // eslint-disable-line no-new
+  el: "#app",
+  router,
+  store,
+  render: h => h(App)
+});

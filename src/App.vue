@@ -1,16 +1,38 @@
 <template>
-  <div id="app">
-    <hello></hello>
+  <div>
+    <div id="app">
+      <navbar :title="currentView"></navbar>
+
+      <div class="container">
+        <router-view></router-view>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello.vue'
+
+import Navbar from './components/Navbar.vue'
 
 export default {
-  name: 'app',
   components: {
-    Hello
-  }
+    Navbar
+  },
+  name: 'app',
+  data: function () {
+    return {
+      currentView: this.$store.state.currentView
+    }
+  },
 }
 </script>
+
+<style scoped>
+.btn-flat {
+  margin-bottom: 1em;
+}
+
+.btn {
+  margin-bottom: 1em;
+}
+</style>
