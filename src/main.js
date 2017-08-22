@@ -38,7 +38,6 @@ const store = new Vuex.Store({
         //   content: "card 1 content",
         //   color: colors.yellow
         // },
-
         // {
         //   id: 2,
         //   title: "card 2 title",
@@ -51,21 +50,31 @@ const store = new Vuex.Store({
   mutations: {
     NOTE_add(state) {
       var newID = state.data.notes.length;
-      state.data.notes.push({ id: newID, title: "", content: "", color: colors.white });
-      router.push({name: 'Editor', params: { noteIn: 'notes', noteID: newID}})
+      state.data.notes.push({
+        id: newID,
+        title: "",
+        content: "",
+        color: colors.white
+      });
+      router.push({
+        name: "Editor",
+        params: { noteIn: "notes", noteID: newID }
+      });
     },
-    
+
     NOTE_edit(state, updateObj) {
-      var index = state.data[updateObj.updateTo].findIndex(i => i.id === updateObj.updateForID)
-      state.data[updateObj.updateTo][index].title = updateObj.title
-      state.data[updateObj.updateTo][index].content = updateObj.content
+      var index = state.data[updateObj.updateTo].findIndex(
+        i => i.id === updateObj.updateForID
+      );
+      state.data[updateObj.updateTo][index].title = updateObj.title;
+      state.data[updateObj.updateTo][index].content = updateObj.content;
     },
 
     // TODO temporary solution as notes will not be sorted
     // if they are sorted, we will have to go trhough notes
     // and see if any notes are empty and remove them
-    NOTE_pop(state, id){
-      state.data.notes.pop()
+    NOTE_pop(state, id) {
+      state.data.notes.pop();
     },
 
     NOTE_archive(state, id) {
@@ -122,7 +131,7 @@ const store = new Vuex.Store({
 
     // TODO
     STATE_import(state, newState) {
-      state.data = JSON.parse(newState).data
+      state.data = JSON.parse(newState).data;
       Materialize.toast("Notes restored from settings file.", 1500);
     }
   }

@@ -29,13 +29,13 @@ export default {
             var data = this.$store.state.data
             var params = this.$route.params
             var note_data = data[params["noteIn"]].find(i => i.id == this.$route.params["noteID"])
-            return note_data;
+            return note_data
         }
     },
     mounted() {
         $('#notecontent').trigger('autoresize');
     },
-    updated() {
+    beforeUpdate() {
         var updateObj = {
             updateTo: this.$route.params["noteIn"],
             updateForID: parseInt(this.$route.params["noteID"]),
