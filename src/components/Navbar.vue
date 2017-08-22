@@ -2,7 +2,7 @@
     <div class="navbar-fixed" v-if="$route.path.includes('editor') == false">
         <nav>
             <div class="nav-wrapper black">
-                <a class="brand-logo left">{{ $route.name }}</a>
+                <a id="navTitle" class="brand-logo left">{{ $route.name }}</a>
                 <ul class="right">
                     <li>
                         <router-link class="waves-effect waves-light" to="/notes">
@@ -38,6 +38,10 @@ export default {
 </script>
 
 <style scoped>
+#navTitle {
+    padding-left: 10px;
+}
+
 .router-link-active {
     border-bottom: 4px solid black;
 }
