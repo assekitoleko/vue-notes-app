@@ -5,7 +5,7 @@
                 <div class="card-title">
                     <input placeholder="Note title" :style="'box-shadow: 0 1px 0 0' + note()['color']['backgroundColor'] + ';border-bottom: 1px solid' + note()['color']['backgroundColor']" id="input" type="text" v-model="note()['title']"></input>
                 </div>
-                <textarea placeholder="Note content" :style="'box-shadow: 0 1px 0 0' + note()['color']['backgroundColor'] + ';border-bottom: 1px solid' + note()['color']['backgroundColor']" class="materialize-textarea" v-model=" note()['content']"></textarea>
+                <textarea id="notecontent" placeholder="Note content" :style="'box-shadow: 0 1px 0 0' + note()['color']['backgroundColor'] + ';border-bottom: 1px solid' + note()['color']['backgroundColor']" class="materialize-textarea" v-model=" note()['content']"></textarea>
             </div>
         </div>
         {{ this.$route.path }}
@@ -30,10 +30,20 @@ export default {
             var params = this.$route.params
             var note_data = data[params["noteIn"]].find(i => i.id == this.$route.params["noteID"])
             return note_data;
-        },
-        test() {
-            $('textarea').focus()
         }
+    },
+    mounted() {
+        $('#notecontent').trigger('autoresize');
+    },
+    updated() {
+        var updateObj = {
+            updateTo: this.$route.params["noteIn"],
+            updateForID: parseInt(this.$route.params["noteID"]),
+            title: this.note()["title"],
+            content: this.note()["content"]
+        }
+
+        this.$store.commit('NOTE_edit', updateObj)
     }
 }
 </script>

@@ -4,7 +4,9 @@
             <div class="card-title">
                 {{ title }}
             </div>
-            {{ content }}
+            <div class="white-space-pre">
+                {{ content }}
+            </div>
             <br></br>
         </div>
         <div class="card-action">
@@ -96,8 +98,12 @@ export default {
 </script>
 
 <style scoped>
-.card-action {
+.white-space-pre {
+    white-space: pre-line;
+    padding-bottom: 0em;
+}
 
+.card-action {
     padding: 0em 0em 0em 0em
 }
 

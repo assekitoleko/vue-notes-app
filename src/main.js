@@ -26,25 +26,25 @@ const store = new Vuex.Store({
       bin: [],
       archive: [],
       notes: [
-        {
-          id: 0,
-          title: "card 0 title",
-          content: "card 0 content",
-          color: colors.grey
-        },
-        {
-          id: 1,
-          title: "card 1 title",
-          content: "card 1 content",
-          color: colors.yellow
-        },
+        // {
+        //   id: 0,
+        //   title: "card 0 title",
+        //   content: "card 0 content",
+        //   color: colors.grey
+        // },
+        // {
+        //   id: 1,
+        //   title: "card 1 title",
+        //   content: "card 1 content",
+        //   color: colors.yellow
+        // },
 
-        {
-          id: 2,
-          title: "card 2 title",
-          content: "card 2 content",
-          color: colors.green
-        }
+        // {
+        //   id: 2,
+        //   title: "card 2 title",
+        //   content: "card 2 content",
+        //   color: colors.green
+        // }
       ]
     }
   },
@@ -54,12 +54,11 @@ const store = new Vuex.Store({
       state.data.notes.push({ id: newID, title: "", content: "", color: colors.white });
       router.push({name: 'Editor', params: { noteIn: 'notes', noteID: newID}})
     },
-
-    // normal note mutations
-    NOTE_edit(state, id) {
-      
-      // var index = state.data.notes.findIndex(i => i.id === id);
-      // state.data.notes[index].title = "edited..in notes";
+    
+    NOTE_edit(state, updateObj) {
+      var index = state.data[updateObj.updateTo].findIndex(i => i.id === updateObj.updateForID)
+      state.data[updateObj.updateTo][index].title = updateObj.title
+      state.data[updateObj.updateTo][index].content = updateObj.content
     },
 
     // TODO temporary solution as notes will not be sorted
@@ -92,8 +91,8 @@ const store = new Vuex.Store({
 
     // archived note mutations
     ARCHIVE_edit(state, id) {
-      var index = state.data.archive.findIndex(i => i.id === id);
-      state.data.archive[index].title = "edited..in archive";
+      // var index = state.data.archive.findIndex(i => i.id === id);
+      // state.data.archive[index].title = "edited..in archive";
     },
 
     ARCHIVE_remove(state, id) {
@@ -109,8 +108,8 @@ const store = new Vuex.Store({
 
     // trashed note mutations
     TRASH_edit(state, id) {
-      var index = state.data.bin.findIndex(i => i.id === id);
-      state.data.bin[index].title = "edited..in trash";
+      // var index = state.data.bin.findIndex(i => i.id === id);
+      // state.data.bin[index].title = "edited..in trash";
     },
 
     TRASH_remove(state, id) {
