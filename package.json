@@ -1,6 +1,6 @@
 {
   "name": "notes-app-vue",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A simple notes app written with Vue",
   "author": "LMW <williamchange@gmail.com>",
   "private": true,
